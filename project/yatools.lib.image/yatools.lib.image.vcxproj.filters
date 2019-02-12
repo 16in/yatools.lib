@@ -18,12 +18,21 @@
     <ClCompile Include="..\..\source\image\ColorBuffer.cpp">
       <Filter>source\image</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\image\yatools.image.cpp">
+      <Filter>source\image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\yatools.type.h">
+    <ClInclude Include="..\..\include\yatools\yatools.type.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\image\yatools.image.h">
+    <ClInclude Include="..\..\include\yatools\yatools.image.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\yatools\image\yatools.image.type.h">
+      <Filter>include\image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\yatools\image\yatools.image.colorbuffer.h">
       <Filter>include\image</Filter>
     </ClInclude>
   </ItemGroup>

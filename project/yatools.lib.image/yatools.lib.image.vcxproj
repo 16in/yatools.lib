@@ -20,10 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\image\ColorBuffer.cpp" />
+    <ClCompile Include="..\..\source\image\yatools.image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\image\yatools.image.h" />
-    <ClInclude Include="..\..\include\yatools.type.h" />
+    <ClInclude Include="..\..\include\yatools\image\yatools.image.colorbuffer.h" />
+    <ClInclude Include="..\..\include\yatools\image\yatools.image.type.h" />
+    <ClInclude Include="..\..\include\yatools\yatools.image.h" />
+    <ClInclude Include="..\..\include\yatools\yatools.type.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
