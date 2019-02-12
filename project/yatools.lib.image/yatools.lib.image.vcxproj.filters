@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{d5eb5d13-dc14-404a-ad36-50a208db42ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\image">
+      <UniqueIdentifier>{31aadfdb-48f7-496b-af42-f6ff1ea6be7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{c97c2af2-3060-44dd-b6b4-f000b58ddc12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\image">
+      <UniqueIdentifier>{f4f347d2-85a8-4a00-a324-2c9084d3f57d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\image\ColorBuffer.cpp">
+      <Filter>source\image</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\yatools.type.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\image\yatools.image.h">
+      <Filter>include\image</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
