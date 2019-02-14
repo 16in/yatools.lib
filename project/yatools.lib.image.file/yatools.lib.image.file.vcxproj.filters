@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{2332d3fa-2134-459e-b438-3d1ecac39086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{4de510c7-4a8f-498c-8406-df37fa53641b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\image.file">
+      <UniqueIdentifier>{de568d41-f64b-4f5c-8486-c77737c75f88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\image">
+      <UniqueIdentifier>{6545ce01-64ae-4982-820f-b836236eb987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\image\file">
+      <UniqueIdentifier>{649227f3-dcfa-4eba-b7cd-c9ae5ec8a17e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\image\file\TgaFile.cpp">
+      <Filter>source\image.file</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\image\file\BitmapFile.cpp">
+      <Filter>source\image.file</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\yatools\image\file\yatools.image.file.tgafile.h">
+      <Filter>include\image\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\yatools\image\file\yatools.image.file.bitmapfile.h">
+      <Filter>include\image\file</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

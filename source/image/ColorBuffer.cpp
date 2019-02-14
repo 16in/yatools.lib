@@ -73,6 +73,14 @@ void ColorBuffer::Release( )
 	}
 }
 
+//-------------------------------------
+// コピー
+//
+ColorBuffer* ColorBuffer::Copy( void )
+{
+	return new ColorBuffer( *this );
+}
+
 
 //-------------------------------------
 // コンストラクタ/デストラクタ
@@ -120,8 +128,32 @@ ColorBuffer::~ColorBuffer( void )
 
 
 //-------------------------------------
-// ピクセル操作
+// 情報取得
 //-------------------------------------
+//-------------------------------------
+// 横幅取得
+//
+uint32 ColorBuffer::GetWidth( void )
+{
+	return m_Width;
+}
+
+//-------------------------------------
+// 縦幅取得
+//
+uint32 ColorBuffer::GetHeight( void )
+{
+	return m_Height;
+}
+
+//-------------------------------------
+// カラーフォーマット取得
+//
+ColorFormat ColorBuffer::GetFormat( void )
+{
+	return m_Format;
+}
+
 //-------------------------------------
 // ピクセルサイズ取得
 //
@@ -130,6 +162,10 @@ uint64 ColorBuffer::GetPixelSize( void )
 	return m_PixelSize;
 }
 
+
+//-------------------------------------
+// ピクセル操作
+//-------------------------------------
 //-------------------------------------
 // ピクセル設定
 //
@@ -224,9 +260,38 @@ ColorBuffer* ColorBuffer::GetPixelBlock( uint32 x, uint32 y, uint32 width, uint3
 	if( x + width < m_Width && y + height < m_Height )
 	{
 		ColorBuffer* block = Create( m_Format, width, height );
-
+		if( block != NULL )
+		{
+			if( !GetPixelBlock( x, y, block->m_Width, block->m_Height, block->m_Buffer, block->m_BufferSize ) )
+			{
+				block->Release( );
+				block = NULL;
+			}
+		}
 	}
 	return NULL;
+}
+
+//-------------------------------------
+// ピクセルブロック取得
+//
+bool ColorBuffer::GetPixelBlock( uint32 x, uint32 y, uint32 width, uint32 height, uintptr blockBuffer, uint64 length )
+{
+	bool retval = false;
+	if( x + width < m_Width && y + height < m_Height )
+	{
+		if( length >= width * height * m_PixelSize )
+		{
+			for( uint32 by = 0; by < height; by++ )
+			{
+				uintptr address = GetPixelAddress( x, y + by );
+				uintptr blockAddress = blockBuffer + ((width * by) * m_PixelSize);
+				memcpy( (void*)blockAddress, (void*)address, width * m_PixelSize );
+			}
+			retval = true;
+		}
+	}
+	return retval;
 }
 
 

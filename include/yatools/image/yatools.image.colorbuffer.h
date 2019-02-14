@@ -49,15 +49,47 @@ namespace yatools
 			* @details
 			*	カラーバッファを開放します。
 			*/
-			virtual void Release( );
+			virtual void Release( void );
+
+			/**
+			* @brief コピー
+			* @returns						コピーされたカラーバッファ
+			* @details
+			*	カラーバッファを複製して返します。
+			*/
+			virtual ColorBuffer* Copy( void );
 
 			/**
 			* @}
 			*/
 			/**
-			* @name ピクセル操作
+			* @name 情報取得
 			* @{
 			*/
+			/**
+			* @brief 横幅取得
+			* @returns						横幅
+			* @details
+			*	横幅を取得します。
+			*/
+			uint32 GetWidth( void );
+
+			/**
+			* @brief 縦幅取得
+			* @returns						縦幅
+			* @details
+			*	縦幅を取得します。
+			*/
+			uint32 GetHeight( void );
+
+			/**
+			* @brief カラーフォーマット取得
+			* @returns						設定されているカラーフォーマット
+			* @details
+			*	設定されているカラーフォーマットを取得します。
+			*/
+			ColorFormat GetFormat( void );
+
 			/**
 			* @brief ピクセルサイズ取得
 			* @returns						1ピクセル当たりのバイト数
@@ -66,6 +98,13 @@ namespace yatools
 			*/
 			uint64 GetPixelSize( void );
 
+			/**
+			* @}
+			*/
+			/**
+			* @name ピクセル操作
+			* @{
+			*/
 			/**
 			* @brief ピクセル設定
 			* @param[in] x, y				座標
