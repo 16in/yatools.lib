@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yatools.lib.image.file", "p
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yatools.lib.image.test", "project\yatools.lib.image.test\yatools.lib.image.test.vcxproj", "{14CE6458-864B-4F53-9989-20B2AB15F2BB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EE25AD10-7D76-4F18-BC77-19C857B74E27} = {EE25AD10-7D76-4F18-BC77-19C857B74E27}
+		{8173F4A9-0435-4B24-997B-49EBFD66530F} = {8173F4A9-0435-4B24-997B-49EBFD66530F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

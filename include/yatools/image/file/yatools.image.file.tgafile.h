@@ -38,9 +38,9 @@ namespace yatools
 			*/
 			enum TgaImageDirection
 			{
-				TGA_IMAGE_LEFT_DOWN = 0,			//!< 左下→右上
-				TGA_IMAGE_LEFT_TOP = 1,				//!< 左上→右下
-				TGA_IMAGE_RIGHT_DOWN = 2,			//!< 右下→左上
+				TGA_IMAGE_LEFT_BOTTOM = 0,			//!< 左下→右上
+				TGA_IMAGE_RIGHT_BOTTOM = 1,			//!< 右下→左上
+				TGA_IMAGE_LEFT_TOP = 2,				//!< 左上→右下
 				TGA_IMAGE_RIGHT_TOP = 3,			//!< 右上→左下
 			};
 
@@ -208,7 +208,19 @@ namespace yatools
 				*	画像フィールドを取得します。			\n
 				*	画像フィールドの情報はヘッダを参照してください。
 				*/
-				static uintptr GetImageFile( uintptr buffer, uint64 length );
+				static uintptr GetImageField( uintptr buffer, uint64 length );
+
+				/**
+				* @brief カラーバッファ取得
+				* @param[in] buffer					TGAファイルが格納済みのメモリ領域
+				* @param[in] length					bufferサイズ
+				* @returns							生成されたカラーバッファ
+				* @retval NULL						生成に失敗
+				* @details
+				*	画像フィールドをヘッダ情報に従ってカラーバッファ化します。	\n
+				*	圧縮形式の場合、この関数は失敗します。
+				*/
+				static ColorBuffer* GetColorBuffer( uintptr buffer, uint64 length );
 
 				/**
 				* @brief 拡張情報フィールド取得
@@ -231,6 +243,27 @@ namespace yatools
 				*	開発者領域フィールドを取得します。
 				*/
 				static uintptr GetDeveloperAreaField( uintptr buffer, uint64 length );
+
+				/**
+				* @brief TGAファイル書き出し
+				* @param[in] colorBuffer			TGAファイルとして書き出すカラーバッファ
+				* @param[in, out] buffer			書き出し先メモリ領域	\n
+				*									NULLの場合は戻り値が必要な領域サイズを返します。
+				* @param[in] length					bufferに格納可能なバイト数
+				* @returns							bufferに書き出されたバイト数		\n
+				*									bufferがNULLの場合は必要なバイト数
+				* @retval 0							colorBufferがTGAファイルに書き出し可能な形式ではない
+				* @details
+				*	カラーバッファをTGAファイルとしてメモリ領域に書き出します。		\n
+				*	書き出し可能なカラーバッファのフォーマットは次のとおりです。	\n
+				*	・ColorFormatR8G8B8		\n
+				*	・ColorFormatA8R8G8B8	\n
+				*	・ColorFormatA1R5G5B5	\n
+				*	・ColorFormatGray8		\n
+				*	\n
+				*	bufferがNULLの場合、ColorBufferの書き出しに必要なバイト数を返します。
+				*/
+				static uint64 WriteFileBuffer( ColorBuffer* colorBuffer, uintptr buffer, uint64 length );
 
 				/**
 				* @}

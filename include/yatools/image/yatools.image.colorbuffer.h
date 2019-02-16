@@ -60,6 +60,15 @@ namespace yatools
 			virtual ColorBuffer* Copy( void );
 
 			/**
+			* @brief フォーマットコンバート
+			* @param[in] format				切り替えるフォーマット
+			* @returns						コピーされたカラーバッファ
+			* @details
+			*	カラーバッファのフォーマットを変換して複製します。
+			*/
+			virtual ColorBuffer* Convert( ColorFormat format );
+
+			/**
 			* @}
 			*/
 			/**
@@ -118,10 +127,38 @@ namespace yatools
 			bool SetPixel( uint32 x, uint32 y, uintptr pixel, uint64 length );
 
 			/**
+			* @brief ピクセルカラー設定
+			* @param[in] x, y,				座標
+			* @param[in] red				赤輝度(0.0 - 1.0)
+			* @param[in] green				緑輝度(0.0 - 1.0)
+			* @param[in] blue				青輝度(0.0 - 1.0)
+			* @param[in] alpha				アルファ値(0.0 - 1.0)
+			* @retval true					設定に成功
+			* @retval false					設定に失敗
+			* @details
+			*	指定座標のピクセルを64bit浮動小数点数カラーで設定します。
+			*/
+			bool SetPixelColor( uint32 x, uint32 y, double red, double green, double blue, double alpha );
+
+			/**
+			* @brief ピクセルカラー設定
+			* @param[in] index				インデックス
+			* @param[in] red				赤輝度(0.0 - 1.0)
+			* @param[in] green				緑輝度(0.0 - 1.0)
+			* @param[in] blue				青輝度(0.0 - 1.0)
+			* @param[in] alpha				アルファ値(0.0 - 1.0)
+			* @retval true					設定に成功
+			* @retval false					設定に失敗
+			* @details
+			*	指定座標のピクセルを64bit浮動小数点数カラーで設定します。
+			*/
+			bool SetPixelColorIndex( uint64 index, double red, double green, double blue, double alpha );
+
+			/**
 			* @brief ピクセル設定
 			* @param[in] x, y				設定開始先頭座標
 			* @param[in] pixels				設定するカラーが格納されている領域の先頭ポインタ
-			* @param[in] length				ピクセルの設定範囲
+			* @param[in] length				ピクセルの設定範囲(個数)
 			* @retval true					設定に成功
 			* @retval false					設定に失敗
 			* @details
@@ -139,6 +176,34 @@ namespace yatools
 			*	取得に成功した場合、少なくとも「戻り値 + GetPixelSize()」の領域は有効です。
 			*/
 			uintptr GetPixelAddress( uint32 x, uint32 y );
+
+			/**
+			* @brief ピクセルカラー取得
+			* @param[in] x, y				座標
+			* @param[ref] red				赤輝度
+			* @param[ref] green				緑輝度
+			* @param[ref] blue				青輝度
+			* @param[ref] alpha				アルファ値
+			* @retval true					取得に成功
+			* @retval false					取得に失敗
+			* @details
+			*	ピクセルカラーを取得します。
+			*/
+			bool GetPixelColor( uint32 x, uint32 y, double& red, double& green, double& blue, double& alpha );
+
+			/**
+			* @brief ピクセルカラー取得
+			* @param[in] index				インデックス
+			* @param[ref] red				赤輝度
+			* @param[ref] green				緑輝度
+			* @param[ref] blue				青輝度
+			* @param[ref] alpha				アルファ値
+			* @retval true					取得に成功
+			* @retval false					取得に失敗
+			* @details
+			*	ピクセルカラーを取得します。
+			*/
+			bool GetPixelColorIndex( uint64 index, double& red, double& green, double& blue, double& alpha );
 
 			/**
 			* @brief ピクセルブロック設定
