@@ -132,7 +132,7 @@ ColorBuffer* TgaFile::GetColorBuffer( uintptr buffer, uint64 length )
 				uintptr pixels = GetImageField( buffer, length );
 				for( uint32 y = 0; y < header->ImageSpecification.Height; y++ )
 				{
-					colorBuffer->SetPixels( 0, header->ImageSpecification.Height - y - 1, pixels + (y * header->ImageSpecification.Width * pixelSize), header->ImageSpecification.Width * pixelSize );
+					colorBuffer->SetPixels( 0, header->ImageSpecification.Height - y - 1, pixels + (uintptr)(y * header->ImageSpecification.Width * pixelSize), header->ImageSpecification.Width * pixelSize );
 				}
 			}
 			else if( header->ImageSpecification.Descriptor.Direction == TGA_IMAGE_RIGHT_TOP )
@@ -142,7 +142,7 @@ ColorBuffer* TgaFile::GetColorBuffer( uintptr buffer, uint64 length )
 				{
 					for( uint32 x = 0; x < header->ImageSpecification.Width; x++ )
 					{
-						colorBuffer->SetPixels( x, y, pixels + (x + y * header->ImageSpecification.Width) * pixelSize, pixelSize );
+						colorBuffer->SetPixels( x, y, pixels + (uintptr)((x + y * header->ImageSpecification.Width) * pixelSize), pixelSize );
 					}
 				}
 			}
@@ -153,7 +153,7 @@ ColorBuffer* TgaFile::GetColorBuffer( uintptr buffer, uint64 length )
 				{
 					for( uint32 x = 0; x < header->ImageSpecification.Width; x++ )
 					{
-						colorBuffer->SetPixels( x, header->ImageSpecification.Height - y - 1, pixels + (x + y * header->ImageSpecification.Width) * pixelSize, pixelSize );
+						colorBuffer->SetPixels( x, header->ImageSpecification.Height - y - 1, pixels + (uintptr)((x + y * header->ImageSpecification.Width) * pixelSize), pixelSize );
 					}
 				}
 			}
@@ -223,15 +223,15 @@ uint64 TgaFile::WriteFileBuffer( ColorBuffer* colorBuffer, uintptr buffer, uint6
 			header->ImageType = (format == ColorFormat::Gray8) ? TGA_GRAY_SCALE : TGA_TRUE_COLOR;
 			header->ImageSpecification.Width = width;
 			header->ImageSpecification.Height = height;
-			header->ImageSpecification.PixelDepth = pixelSize * 8;
+			header->ImageSpecification.PixelDepth = (uint8)(pixelSize * 8);
 			header->ImageSpecification.Descriptor.Direction = TGA_IMAGE_LEFT_TOP;
 			
 			// フォーマットチェック
-			memcpy( (void*)GetImageField( buffer, length ), (void*)colorBuffer->GetPixelAddress( 0, 0 ), pixelSize * width * height );
+			memcpy( (void*)GetImageField( buffer, length ), (void*)colorBuffer->GetPixelAddress( 0, 0 ), (size_t)(pixelSize * width * height) );
 
 			// フッター付与
 			TgaFooter* footer = (TgaFooter*)(buffer + size - sizeof( TgaFooter ));
-			strcpy( footer->Signature, "TRUEVISION-XFILE." );
+			memcpy( footer->Signature, "TRUEVISION-XFILE.", 18 );
 		}
 	}
 	return size;

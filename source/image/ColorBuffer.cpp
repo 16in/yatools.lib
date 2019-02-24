@@ -56,7 +56,7 @@ ColorBuffer* ColorBuffer::Create( ColorFormat format, uint32 width, uint32 heigh
 			{
 				bufferLength = retval->m_BufferSize;
 			}
-			memcpy( (void*)retval->m_Buffer, (void*)buffer, bufferLength );
+			memcpy( (void*)retval->m_Buffer, (void*)buffer, (size_t)bufferLength );
 		}
 	}
 	return retval;
@@ -122,10 +122,10 @@ ColorBuffer::ColorBuffer( ColorBuffer& source )
 	m_Height = source.m_Height;
 	m_BufferSize = source.m_BufferSize;
 	m_PixelSize = source.m_PixelSize;
-	m_Buffer = (uintptr)new byte[ m_BufferSize ];
+	m_Buffer = (uintptr)new byte[ (unsigned int)m_BufferSize ];
 	if( m_Buffer != NULL )
 	{
-		memcpy( (void*)m_Buffer, (void*)source.m_Buffer, m_BufferSize );
+		memcpy( (void*)m_Buffer, (void*)source.m_Buffer, (size_t)m_BufferSize );
 	}
 }
 
@@ -191,7 +191,7 @@ bool ColorBuffer::SetPixel( uint32 x, uint32 y, uintptr pixel, uint64 length )
 		uintptr address = GetPixelAddress( x, y );
 		if( address != NULL && (address + m_PixelSize) <= (m_Buffer + m_BufferSize) )
 		{
-			memcpy( (void*)address, (void*)pixel, m_PixelSize );
+			memcpy( (void*)address, (void*)pixel, (size_t)m_PixelSize );
 			return true;
 		}
 	}
@@ -211,7 +211,7 @@ bool ColorBuffer::SetPixelColor( uint32 x, uint32 y, double red, double green, d
 //
 bool ColorBuffer::SetPixelColorIndex( uint64 index, double red, double green, double blue, double alpha )
 {
-	uintptr address = m_Buffer + (index * m_PixelSize);
+	uintptr address = m_Buffer + (uintptr)(index * m_PixelSize);
 	if( address != NULL && (address + m_PixelSize) <= (m_Buffer + m_BufferSize) )
 	{
 		switch( m_Format )
@@ -394,7 +394,7 @@ bool ColorBuffer::SetPixels( uint32 x, uint32 y, uintptr pixels, uint64 length )
 		uint64 count = length / m_PixelSize;
 		if( count > 0 && address + (count * m_PixelSize) <= (m_Buffer + m_BufferSize) )
 		{
-			memcpy( (void*)address, (void*)pixels, count * m_PixelSize );
+			memcpy( (void*)address, (void*)pixels, (size_t)(count * m_PixelSize) );
 			return true;
 		}
 	}
@@ -408,7 +408,7 @@ uintptr ColorBuffer::GetPixelAddress( uint32 x, uint32 y )
 {
 	if( x < m_Width && y < m_Height )
 	{
-		return m_Buffer + ((x + (m_Width * y)) * m_PixelSize);
+		return m_Buffer + (uintptr)((x + (m_Width * y)) * m_PixelSize);
 	}
 	return NULL;
 }
@@ -428,7 +428,7 @@ bool ColorBuffer::GetPixelColorIndex( uint64 index, double& red, double& green, 
 {
 	if( index < m_Width * m_Height )
 	{
-		uintptr address = m_Buffer + (index * m_PixelSize);
+		uintptr address = m_Buffer + (uintptr)(index * m_PixelSize);
 		switch( m_Format )
 		{
 		case ColorFormat::Gray8:
@@ -606,8 +606,8 @@ bool ColorBuffer::SetPixelBlock( uint32 x, uint32 y, uint32 width, uint32 height
 				for( uint32 i = 0; i < height; i++ )
 				{
 					address = GetPixelAddress( x, y + i );
-					memcpy( (void*)address, (void*)blocks, blockrowlength );
-					blocks += blockrowlength;
+					memcpy( (void*)address, (void*)blocks, (size_t)blockrowlength );
+					blocks += (uintptr)blockrowlength;
 				}
 				return true;
 			}
@@ -661,8 +661,8 @@ bool ColorBuffer::GetPixelBlock( uint32 x, uint32 y, uint32 width, uint32 height
 			for( uint32 by = 0; by < height; by++ )
 			{
 				uintptr address = GetPixelAddress( x, y + by );
-				uintptr blockAddress = blockBuffer + ((width * by) * m_PixelSize);
-				memcpy( (void*)blockAddress, (void*)address, width * m_PixelSize );
+				uintptr blockAddress = blockBuffer + (uintptr)((width * by) * m_PixelSize);
+				memcpy( (void*)blockAddress, (void*)address, (size_t)(width * m_PixelSize) );
 			}
 			retval = true;
 		}
