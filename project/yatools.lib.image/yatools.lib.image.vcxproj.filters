@@ -21,6 +21,9 @@
     <ClCompile Include="..\..\source\image\yatools.image.cpp">
       <Filter>source\image</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\image\Windows.cpp">
+      <Filter>source\image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\yatools\yatools.type.h">
@@ -33,6 +36,9 @@
       <Filter>include\image</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\yatools\image\yatools.image.colorbuffer.h">
+      <Filter>include\image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\yatools\image\yatools.image.windows.h">
       <Filter>include\image</Filter>
     </ClInclude>
   </ItemGroup>
