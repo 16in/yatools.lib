@@ -129,42 +129,42 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\Debug\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)bin\Debug\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\Debug\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)bin\Debug\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\Release\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)bin\Release\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\Release\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)bin\Release\$(PlatformTarget)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
