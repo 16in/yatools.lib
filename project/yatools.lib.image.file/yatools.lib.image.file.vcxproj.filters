@@ -24,6 +24,9 @@
     <ClCompile Include="..\..\source\image\file\BitmapFile.cpp">
       <Filter>source\image.file</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\image\file\PngFile.cpp">
+      <Filter>source\image.file</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\yatools\image\file\yatools.image.file.tgafile.h">
@@ -31,6 +34,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\yatools\image\file\yatools.image.file.bitmapfile.h">
       <Filter>include\image\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\yatools\image\file\yatools.image.file.pngfile.h">
+      <Filter>include\image\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\yatools\yatools.image.file.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

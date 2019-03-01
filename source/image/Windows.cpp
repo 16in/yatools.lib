@@ -99,14 +99,14 @@ ColorBuffer* Windows::GetColorBuffer( HBITMAP hBitmap )
 
 
 	/*---- カラーバッファ生成 ----*/
-	ColorFormat format = ColorFormat::R8G8B8;
+	ColorFormat format = ColorFormat::B8G8R8;
 	if( bitmap.bmBitsPixel == 32 )
 	{
-		format = ColorFormat::A8R8G8B8;
+		format = ColorFormat::B8G8R8A8;
 	}
 	else if( bitmap.bmBitsPixel == 16 )
 	{
-		format = ColorFormat::R5G6B5;
+		format = ColorFormat::B5G6R5;
 	}
 	else if( bitmap.bmBitsPixel == 8 )
 	{

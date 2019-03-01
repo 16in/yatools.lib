@@ -177,6 +177,14 @@ uint64 ColorBuffer::GetPixelSize( void )
 	return m_PixelSize;
 }
 
+//-------------------------------------
+// 総ピクセル数取得
+//
+uint64 ColorBuffer::GetPixelCount( void )
+{
+	return m_Width * m_Height;
+}
+
 
 //-------------------------------------
 // ピクセル操作

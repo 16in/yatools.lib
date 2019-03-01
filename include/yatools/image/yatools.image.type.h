@@ -73,8 +73,8 @@ namespace yatools
 			uint16 Gray;
 		};
 
-		//! Red 5bit, Green 5bit, Blue 5bit
-		struct YATOOLS_IMPORT ColorR5G5B5
+		//! Blue 5bit, Green 5bit, Red 5bit
+		struct YATOOLS_IMPORT ColorB5G5R5
 		{
 			uint16 bits;
 			inline void SetRed( uint8 r ) { bits = (bits & 0x07ff) | ((r & 0x1f) << 11); }
@@ -85,8 +85,8 @@ namespace yatools
 			inline uint8 GetBlue( void ) { return (bits >> 10) & 0x1f; }
 		};
 
-		//! Blue 5bit, Green 5bit, Red 5bit
-		struct YATOOLS_IMPORT ColorB5G5R5
+		//! Red 5bit, Green 5bit, Blue 5bit
+		struct YATOOLS_IMPORT ColorR5G5B5
 		{
 			uint16 bits;
 			inline void SetRed( uint8 r ) { bits = (bits & 0xffC1) | ((r & 0x1f) << 1); }
@@ -97,22 +97,8 @@ namespace yatools
 			inline uint8 GetBlue( void ) { return bits & 0x1f; }
 		};
 
-		//! Red 5bit, Green 5bit, Blue 5bit, Alpha 1bit
-		struct YATOOLS_IMPORT ColorR5G5B5A1
-		{
-			uint16 bits;
-			inline void SetRed( uint8 r ) { bits = (bits & 0x07ff) | ((r & 0x1f) << 11); }
-			inline void SetGreen( uint8 g ) { bits = (bits & 0xf83f) | ((g & 0x1f) << 6); }
-			inline void SetBlue( uint8 b ) { bits = (bits & 0xffC1) | ((b & 0x1f) << 1); }
-			inline void SetAlpha( uint8 a ) { bits = (bits & 0xfffe) | (a & 0x01); }
-			inline uint8 GetRed( void ) { return (bits >> 11) & 0x1f; }
-			inline uint8 GetGreen( void ) { return (bits >> 6) & 0x1f; }
-			inline uint8 GetBlue( void ) { return (bits >> 1) & 0x1f; }
-			inline uint8 GetAlpha( void ) { return bits & 0x01; }
-		};
-
-		//! Blue 5bit, Green 5bit, Red 5bit, Alpha 1bit
-		struct YATOOLS_IMPORT ColorB5G5R5A1
+		//! Alpha 1bit, Red 5bit, Green 5bit, Blue 5bit
+		struct YATOOLS_IMPORT ColorA1R5G5B5
 		{
 			uint16 bits;
 			inline void SetRed( uint8 r ) { bits = (bits & 0xffC1) | ((r & 0x1f) << 1); }
@@ -125,8 +111,8 @@ namespace yatools
 			inline uint8 GetAlpha( void ) { return bits & 0x01; }
 		};
 
-		//! Alpha 1bit, Red 5bit, Green 5bit, Blue 5bit
-		struct YATOOLS_IMPORT ColorA1R5G5B5
+		//! Blue 5bit, Green 5bit, Red 5bit, Alpha 1bit
+		struct YATOOLS_IMPORT ColorB5G5R5A1
 		{
 			uint16 bits;
 			inline void SetRed( uint8 r ) { bits = (bits & 0x83ff) | ((r & 0x1f) << 10); }
@@ -143,6 +129,20 @@ namespace yatools
 		struct YATOOLS_IMPORT ColorA1B5G5R5
 		{
 			uint16 bits;
+			inline void SetRed( uint8 r ) { bits = (bits & 0x07ff) | ((r & 0x1f) << 11); }
+			inline void SetGreen( uint8 g ) { bits = (bits & 0xf83f) | ((g & 0x1f) << 6); }
+			inline void SetBlue( uint8 b ) { bits = (bits & 0xffC1) | ((b & 0x1f) << 1); }
+			inline void SetAlpha( uint8 a ) { bits = (bits & 0xfffe) | (a & 0x01); }
+			inline uint8 GetRed( void ) { return (bits >> 11) & 0x1f; }
+			inline uint8 GetGreen( void ) { return (bits >> 6) & 0x1f; }
+			inline uint8 GetBlue( void ) { return (bits >> 1) & 0x1f; }
+			inline uint8 GetAlpha( void ) { return bits & 0x01; }
+		};
+
+		//! Red 5bit, Green 5bit, Blue 5bit, Alpha 1bit
+		struct YATOOLS_IMPORT ColorR5G5B5A1
+		{
+			uint16 bits;
 			inline void SetRed( uint8 r ) { bits = (bits & 0xffe0) | ((r & 0x1f)); }
 			inline void SetGreen( uint8 g ) { bits = (bits & 0xfc1f) | ((g & 0x1f) << 5); }
 			inline void SetBlue( uint8 b ) { bits = (bits & 0x83ff) | ((b & 0x1f) << 10); }
@@ -157,18 +157,6 @@ namespace yatools
 		struct YATOOLS_IMPORT ColorR5G6B5
 		{
 			uint16 bits;
-			inline void SetRed( uint8 r ) { bits = (bits & 0xffe0) | ((r & 0x1f)); }
-			inline void SetGreen( uint8 g ) { bits = (bits & 0xf81f) | ((g & 0x3f) << 5); }
-			inline void SetBlue( uint8 b ) { bits = (bits & 0x07ff) | ((b & 0x1f) << 11); }
-			inline uint8 GetRed( void ) { return (bits >> 11) & 0x1f; }
-			inline uint8 GetGreen( void ) { return (bits >> 5) & 0x3f; }
-			inline uint8 GetBlue( void ) { return bits & 0x1f; }
-		};
-
-		//! Blue 5bit, Green 6bit, Red 5bit
-		struct YATOOLS_IMPORT ColorB5G6R5
-		{
-			uint16 bits;
 			inline void SetRed( uint8 r ) { bits = (bits & 0x07ff) | ((r & 0x1f) << 11); }
 			inline void SetGreen( uint8 g ) { bits = (bits & 0xf81f) | ((g & 0x3f) << 5); }
 			inline void SetBlue( uint8 b ) { bits = (bits & 0xffe0) | ((b & 0x1f)); }
@@ -177,162 +165,174 @@ namespace yatools
 			inline uint8 GetBlue( void ) { return (bits >> 11) & 0x1f; }
 		};
 
+		//! Blue 5bit, Green 6bit, Red 5bit
+		struct YATOOLS_IMPORT ColorB5G6R5
+		{
+			uint16 bits;
+			inline void SetRed( uint8 r ) { bits = (bits & 0xffe0) | ((r & 0x1f)); }
+			inline void SetGreen( uint8 g ) { bits = (bits & 0xf81f) | ((g & 0x3f) << 5); }
+			inline void SetBlue( uint8 b ) { bits = (bits & 0x07ff) | ((b & 0x1f) << 11); }
+			inline uint8 GetRed( void ) { return (bits >> 11) & 0x1f; }
+			inline uint8 GetGreen( void ) { return (bits >> 5) & 0x3f; }
+			inline uint8 GetBlue( void ) { return bits & 0x1f; }
+		};
+
 		//! Red 4bit, Green 4bit, Blue 4bit
 		struct YATOOLS_IMPORT ColorR4G4B4
 		{
-			uint8 Blue : 4;
-			uint8 Green : 4;
 			uint8 Red : 4;
+			uint8 Green : 4;
+			uint8 Blue : 4;
 			uint8 reserve : 4;
 		};
 
 		//! Blue 4bit, Green 4bit, Red 4bit
 		struct YATOOLS_IMPORT ColorB4G4R4
 		{
-			uint8 Red : 4;
-			uint8 Green : 4;
 			uint8 Blue : 4;
+			uint8 Green : 4;
+			uint8 Red : 4;
 			uint8 reserve : 4;
 		};
 
 		//! Red 4bit, Green 4bit, Blue 4bit, Alpha 4bit
 		struct YATOOLS_IMPORT ColorR4G4B4A4
 		{
-			uint8 Red : 4;
-			uint8 Green : 4;
-			uint8 Blue : 4;
 			uint8 Alpha : 4;
+			uint8 Blue : 4;
+			uint8 Green : 4;
+			uint8 Red : 4;
 		};
 
 		//! Blue 4bit, Green 4bit, Red 4bit, Alpha 4bit
 		struct YATOOLS_IMPORT ColorB4G4R4A4
 		{
-			uint8 Alpha : 4;
-			uint8 Red : 4;
-			uint8 Green : 4;
 			uint8 Blue : 4;
+			uint8 Green : 4;
+			uint8 Red : 4;
+			uint8 Alpha : 4;
 		};
 
 		//! Alpha 4bit, Red 4bit, Green 4bit, Blue 4bit
 		struct YATOOLS_IMPORT ColorA4R4G4B4
 		{
-			uint8 Blue : 4;
-			uint8 Green : 4;
-			uint8 Red : 4;
 			uint8 Alpha : 4;
+			uint8 Red : 4;
+			uint8 Green : 4;
+			uint8 Blue : 4;
 		};
 
 		//! Alpha 4bit, Blue 4bit, Green 4bit, Red 4bit
 		struct YATOOLS_IMPORT ColorA4B4G4R4
 		{
-			uint8 Red : 4;
-			uint8 Green : 4;
-			uint8 Blue : 4;
 			uint8 Alpha : 4;
+			uint8 Blue : 4;
+			uint8 Green : 4;
+			uint8 Red : 4;
 		};
 
 		//! Red 8bit, Green 8bit, Blue 8bit
 		struct YATOOLS_IMPORT ColorR8G8B8
 		{
-			uint8 Blue;
-			uint8 Green;
 			uint8 Red;
+			uint8 Green;
+			uint8 Blue;
 		};
 
 		//! Blue 8bit, Green 8bit, Red 8bit
 		struct YATOOLS_IMPORT ColorB8G8R8
 		{
-			uint8 Red;
-			uint8 Green;
 			uint8 Blue;
+			uint8 Green;
+			uint8 Red;
 		};
 
 		//! Red 8bit, Green 8bit, Blue 8bit, Alpha 8bit
 		struct YATOOLS_IMPORT ColorR8G8B8A8
 		{
-			uint8 Alpha;
-			uint8 Blue;
-			uint8 Green;
 			uint8 Red;
+			uint8 Green;
+			uint8 Blue;
+			uint8 Alpha;
 		};
 
 		//! Blue 8bit, Green 8bit, Red 8bit, Alpha 8bit
 		struct YATOOLS_IMPORT ColorB8G8R8A8
 		{
-			uint8 Alpha;
-			uint8 Red;
-			uint8 Green;
 			uint8 Blue;
+			uint8 Green;
+			uint8 Red;
+			uint8 Alpha;
 		};
 
 		//! Alpha 8bit, Red 8bit, Green 8bit, Blue 8bit
 		struct YATOOLS_IMPORT ColorA8R8G8B8
 		{
-			uint8 Blue;
-			uint8 Green;
-			uint8 Red;
 			uint8 Alpha;
+			uint8 Red;
+			uint8 Green;
+			uint8 Blue;
 		};
 
 		//! Alpha 8bit, Blue 8bit, Green 8bit, Red 8bit
 		struct YATOOLS_IMPORT ColorA8B8G8R8
 		{
-			uint8 Red;
-			uint8 Green;
-			uint8 Blue;
 			uint8 Alpha;
+			uint8 Blue;
+			uint8 Green;
+			uint8 Red;
 		};
 
 		//! Red, Green, Blue single float
 		struct YATOOLS_IMPORT ColorRsGsBs
 		{
-			float Blue;
-			float Green;
 			float Red;
+			float Green;
+			float Blue;
 		};
 
 		//! Red, Green, Blue, Alpha single float
 		struct YATOOLS_IMPORT ColorRsGsBsAs
 		{
-			float Alpha;
-			float Blue;
-			float Green;
 			float Red;
+			float Green;
+			float Blue;
+			float Alpha;
 		};
 
 		//! Alpha, Red, Green, Blue single float
 		struct YATOOLS_IMPORT ColorAsRsGsBs
 		{
-			float Blue;
-			float Green;
-			float Red;
 			float Alpha;
+			float Red;
+			float Green;
+			float Blue;
 		};
 
 		//! Red, Green, Blue double float
 		struct YATOOLS_IMPORT ColorRdGdBd
 		{
-			double Blue;
-			double Green;
 			double Red;
+			double Green;
+			double Blue;
 		};
 
 		//! Red, Green, Blue, Alpha double float
 		struct YATOOLS_IMPORT ColorRdGdBdAd
 		{
-			double Alpha;
-			double Blue;
-			double Green;
 			double Red;
+			double Green;
+			double Blue;
+			double Alpha;
 		};
 
 		//! Alpha, Red, Green, Blue double float
 		struct YATOOLS_IMPORT ColorAdRdGdBd
 		{
-			double Blue;
-			double Green;
-			double Red;
 			double Alpha;
+			double Red;
+			double Green;
+			double Blue;
 		};
 
 #pragma pack( )

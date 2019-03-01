@@ -108,6 +108,15 @@ namespace yatools
 			uint64 GetPixelSize( void );
 
 			/**
+			* @brief ピクセル総数取得
+			* @returns						カラーバッファに含まれる総ピクセル数
+			* @details
+			*	カラーバッファに含まれる総ピクセル数を取得します。	\n
+			*	GetWidth( ) * GetHeight( )と等しくなります。
+			*/
+			uint64 GetPixelCount( void );
+
+			/**
 			* @}
 			*/
 			/**

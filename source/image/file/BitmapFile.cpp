@@ -96,7 +96,7 @@ ColorBuffer* BmpFile::GetColorBuffer32( uintptr buffer, uint64 length )
 	uintptr image = GetImageField( buffer, length );
 	uint32 width = info->Width < 0 ? -info->Width : info->Width;
 	uint32 height = info->Height < 0 ? -info->Height : info->Height;
-	ColorBuffer* colorBuffer = ColorBuffer::Create( ColorFormat::A8R8G8B8, width, height );
+	ColorBuffer* colorBuffer = ColorBuffer::Create( ColorFormat::B8G8R8A8, width, height );
 	if( colorBuffer != NULL )
 	{
 		if( info->BitDepth == 32 )
@@ -147,7 +147,7 @@ ColorBuffer* BmpFile::GetColorBuffer24( uintptr buffer, uint64 length )
 	uintptr image = GetImageField( buffer, length );
 	int width = info->Width < 0 ? -info->Width : info->Width;
 	int height = info->Height < 0 ? -info->Height : info->Height;
-	ColorBuffer* colorBuffer = ColorBuffer::Create( ColorFormat::R8G8B8, width, height );
+	ColorBuffer* colorBuffer = ColorBuffer::Create( ColorFormat::B8G8R8, width, height );
 	if( colorBuffer != NULL )
 	{
 		if( info->BitDepth == 24 )
@@ -197,10 +197,10 @@ ColorBuffer* BmpFile::GetColorBufferPalet( uintptr buffer, uint64 length )
 {
 	BmpInfomationHeader* info = GetInfomationHeader( buffer, length );
 	uintptr image = GetImageField( buffer, length );
-	ColorA8R8G8B8* palet = (ColorA8R8G8B8*)GetColorPalets( buffer, length );
+	ColorB8G8R8A8* palet = (ColorB8G8R8A8*)GetColorPalets( buffer, length );
 	int width = info->Width < 0 ? -info->Width : info->Width;
 	int height = info->Height < 0 ? -info->Height : info->Height;
-	ColorBuffer* colorBuffer = ColorBuffer::Create( ColorFormat::A8R8G8B8, width, height );
+	ColorBuffer* colorBuffer = ColorBuffer::Create( ColorFormat::B8G8R8A8, width, height );
 	if( colorBuffer != NULL )
 	{
 		if( info->BitDepth == 8 )
@@ -277,13 +277,25 @@ uint64 BmpFile::WriteFileBuffer( ColorBuffer* colorBuffer, uintptr buffer, uint6
 	{
 		return 0;
 	}
+
+
+	/*---- カラーバッファコンバート ----*/
+	ColorBuffer* originBuffer = colorBuffer;
 	switch( colorBuffer->GetFormat( ) )
 	{
-	case ColorFormat::A8R8G8B8:
-	case ColorFormat::R8G8B8:
+	case ColorFormat::B8G8R8: break;
+	case ColorFormat::Gray8: case ColorFormat::Gray16:
+		if( (colorBuffer = colorBuffer->Convert( ColorFormat::B8G8R8 )) == NULL )
+		{
+			return 0;
+		}
 		break;
 	default:
-		return 0;
+		if( (colorBuffer = colorBuffer->Convert( ColorFormat::B8G8R8 )) == NULL )
+		{
+			return 0;
+		}
+		break;
 	}
 
 
@@ -299,38 +311,46 @@ uint64 BmpFile::WriteFileBuffer( ColorBuffer* colorBuffer, uintptr buffer, uint6
 	{
 		if( length < bmpsize )
 		{
-			return 0;
+			bmpsize = 0;
 		}
-
-
-		/*-- ヘッダ部分クリア --*/
-		memset( (void*)buffer, 0, sizeof( BmpHeader ) + sizeof( BmpInfomationHeader ) );
-
-
-		/*-- ヘッダ設定 --*/
-		BmpHeader* header = (BmpHeader*)buffer;
-		header->Kind[ 0 ] = 'B'; header->Kind[ 1 ] = 'M';
-		header->FileSize = (uint32)bmpsize;
-		header->OffsetImage = sizeof( BmpHeader ) + sizeof( BmpInfomationHeader );
-
-
-		/*-- 情報ヘッダ設定 --*/
-		BmpInfomationHeader* info = (BmpInfomationHeader*)(buffer + sizeof( BmpHeader ));
-		info->InfomationSize = (uint32)sizeof( BmpInfomationHeader );
-		info->BitDepth = (uint16)colorBuffer->GetPixelSize( ) * 8;
-		info->Width = (int32)colorBuffer->GetWidth( );
-		info->Height = (int32)colorBuffer->GetHeight( );
-		info->Plane = 1;
-		info->SizeImage = (uint32)imageSize;
-
-
-		/*-- 下から格納していく --*/
-		uintptr image = buffer + header->OffsetImage;
-		memset( (void*)image, 0, (size_t)imageSize );
-		for( int y = 0; y < info->Height; y++ )
+		else
 		{
-			memcpy( (void*)(image + (y * lineSize)), (void*)colorBuffer->GetPixelAddress( 0, info->Height - (uint32)y - 1 ), (size_t)lineSize );
+			/*-- ヘッダ部分クリア --*/
+			memset( (void*)buffer, 0, sizeof( BmpHeader ) + sizeof( BmpInfomationHeader ) );
+
+
+			/*-- ヘッダ設定 --*/
+			BmpHeader* header = (BmpHeader*)buffer;
+			header->Kind[ 0 ] = 'B'; header->Kind[ 1 ] = 'M';
+			header->FileSize = (uint32)bmpsize;
+			header->OffsetImage = sizeof( BmpHeader ) + sizeof( BmpInfomationHeader );
+
+
+			/*-- 情報ヘッダ設定 --*/
+			BmpInfomationHeader* info = (BmpInfomationHeader*)(buffer + sizeof( BmpHeader ));
+			info->InfomationSize = (uint32)sizeof( BmpInfomationHeader );
+			info->BitDepth = (uint16)colorBuffer->GetPixelSize( ) * 8;
+			info->Width = (int32)colorBuffer->GetWidth( );
+			info->Height = (int32)colorBuffer->GetHeight( );
+			info->Plane = 1;
+			info->SizeImage = (uint32)imageSize;
+
+
+			/*-- 下から格納していく --*/
+			uintptr image = buffer + header->OffsetImage;
+			memset( (void*)image, 0, (size_t)imageSize );
+			for( int y = 0; y < info->Height; y++ )
+			{
+				memcpy( (void*)(image + (y * lineSize)), (void*)colorBuffer->GetPixelAddress( 0, info->Height - (uint32)y - 1 ), (size_t)lineSize );
+			}
 		}
+	}
+
+
+	/*---- 内部でコンバートしていたら廃棄 ----*/
+	if( originBuffer != colorBuffer )
+	{
+		colorBuffer->Release( );
 	}
 
 	return bmpsize;

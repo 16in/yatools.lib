@@ -109,15 +109,15 @@ ColorBuffer* TgaFile::GetColorBuffer( uintptr buffer, uint64 length )
 		{
 			if( header->ImageSpecification.PixelDepth == 16 )
 			{
-				colorBuffer = ColorBuffer::Create( ColorFormat::A1R5G5B5, header->ImageSpecification.Width, header->ImageSpecification.Height );
+				colorBuffer = ColorBuffer::Create( ColorFormat::B5G5R5A1, header->ImageSpecification.Width, header->ImageSpecification.Height );
 			}
 			else if( header->ImageSpecification.PixelDepth == 24 )
 			{
-				colorBuffer = ColorBuffer::Create( ColorFormat::R8G8B8, header->ImageSpecification.Width, header->ImageSpecification.Height );
+				colorBuffer = ColorBuffer::Create( ColorFormat::B8G8R8, header->ImageSpecification.Width, header->ImageSpecification.Height );
 			}
 			else
 			{
-				colorBuffer = ColorBuffer::Create( ColorFormat::A8R8G8B8, header->ImageSpecification.Width, header->ImageSpecification.Height );
+				colorBuffer = ColorBuffer::Create( ColorFormat::B8G8R8A8, header->ImageSpecification.Width, header->ImageSpecification.Height );
 			}
 		}
 		if( colorBuffer != NULL )
@@ -197,6 +197,28 @@ uint64 TgaFile::WriteFileBuffer( ColorBuffer* colorBuffer, uintptr buffer, uint6
 	uint64 size = 0;
 	if( colorBuffer != NULL )
 	{
+		/*---- カラーフォーマット変換 ----*/
+		ColorBuffer* origin = colorBuffer;
+		switch( colorBuffer->GetFormat() )
+		{
+		case Gray8: case B8G8R8: case B8G8R8A8: case B5G5R5A1:
+			break;
+		case Gray16:
+			colorBuffer = origin->Convert( Gray8 );
+			break;
+		case R8G8B8: case RsGsBs: case RdGdBd:
+			colorBuffer = origin->Convert( B8G8R8 );
+			break;
+		case A8R8G8B8: case R8G8B8A8: case A8B8G8R8:
+		case AsRsGsBs: case AdRdGdBd: case RsGsBsAs: case RdGdBdAd:
+			colorBuffer = origin->Convert( B8G8R8A8 );
+			break;
+		default:
+			colorBuffer = origin->Convert( B5G5R5A1 );
+			break;
+		}
+
+
 		/*---- 諸情報取得 ----*/
 		ColorFormat format = colorBuffer->GetFormat( );
 		uint32 width = colorBuffer->GetWidth( ), height = colorBuffer->GetHeight( );
@@ -207,31 +229,40 @@ uint64 TgaFile::WriteFileBuffer( ColorBuffer* colorBuffer, uintptr buffer, uint6
 		size = sizeof( TgaHeader );
 		size += sizeof( TgaFooter );
 		size += pixelSize * width * height;
-		
+
 
 		/*---- バッファに格納していく ----*/
 		if( buffer != NULL )
 		{
 			if( length < size )
 			{
-				return 0;
+				size = 0;
 			}
+			else
+			{
+				// ヘッダ生成
+				TgaHeader* header = (TgaHeader*)buffer;
+				memset( header, 0, sizeof( TgaHeader ) );
+				header->ImageType = (format == ColorFormat::Gray8) ? TGA_GRAY_SCALE : TGA_TRUE_COLOR;
+				header->ImageSpecification.Width = width;
+				header->ImageSpecification.Height = height;
+				header->ImageSpecification.PixelDepth = (uint8)(pixelSize * 8);
+				header->ImageSpecification.Descriptor.Direction = TGA_IMAGE_LEFT_TOP;
 
-			// ヘッダ生成
-			TgaHeader* header = (TgaHeader*)buffer;
-			memset( header, 0, sizeof( TgaHeader ) );
-			header->ImageType = (format == ColorFormat::Gray8) ? TGA_GRAY_SCALE : TGA_TRUE_COLOR;
-			header->ImageSpecification.Width = width;
-			header->ImageSpecification.Height = height;
-			header->ImageSpecification.PixelDepth = (uint8)(pixelSize * 8);
-			header->ImageSpecification.Descriptor.Direction = TGA_IMAGE_LEFT_TOP;
-			
-			// フォーマットチェック
-			memcpy( (void*)GetImageField( buffer, length ), (void*)colorBuffer->GetPixelAddress( 0, 0 ), (size_t)(pixelSize * width * height) );
+				// フォーマットチェック
+				memcpy( (void*)GetImageField( buffer, length ), (void*)colorBuffer->GetPixelAddress( 0, 0 ), (size_t)(pixelSize * width * height) );
 
-			// フッター付与
-			TgaFooter* footer = (TgaFooter*)(buffer + size - sizeof( TgaFooter ));
-			memcpy( footer->Signature, "TRUEVISION-XFILE.", 18 );
+				// フッター付与
+				TgaFooter* footer = (TgaFooter*)(buffer + size - sizeof( TgaFooter ));
+				memcpy( footer->Signature, "TRUEVISION-XFILE.", 18 );
+			}
+		}
+
+
+		// 内部でコンバートしていたら廃棄
+		if( origin != colorBuffer )
+		{
+			colorBuffer->Release( );
 		}
 	}
 	return size;
