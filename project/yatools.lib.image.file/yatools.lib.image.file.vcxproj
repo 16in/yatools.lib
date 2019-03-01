@@ -117,7 +117,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir)library\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Include;$(ProjectDir)..\..\library\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -128,7 +128,7 @@
       <AdditionalDependencies>yatools.image.lib;zlib.lib;libpng16.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)library\bin\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(ProjectDir)..\..\library\bin\$(PlatformTarget)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -139,7 +139,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir)library\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Include;$(ProjectDir)..\..\library\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -150,7 +150,7 @@
       <AdditionalDependencies>yatools.image.lib;zlib.lib;libpng16.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)library\bin\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(ProjectDir)..\..\library\bin\$(PlatformTarget)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -163,7 +163,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir)library\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Include;$(ProjectDir)..\..\library\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -176,7 +176,7 @@
       <AdditionalDependencies>yatools.image.lib;zlib.lib;libpng16.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)library\bin\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(ProjectDir)..\..\library\bin\$(PlatformTarget)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -189,7 +189,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir)library\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Include;$(ProjectDir)..\..\library\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -202,7 +202,7 @@
       <AdditionalDependencies>yatools.image.lib;zlib.lib;libpng16.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)library\bin\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(ProjectDir)..\..\library\bin\$(PlatformTarget)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
