@@ -2,5 +2,7 @@
 @SETLOCAL 
 @call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
 
-MSBuild.exe yatools.lib.sln /p:Platform=x86 /p:Configuration=Release
-MSBuild.exe yatools.lib.sln /p:Platform=x64 /p:Configuration=Release
+MSBuild.exe yatools.lib.sln /p:Platform=x86 /p:Configuration="Debug Library"
+MSBuild.exe yatools.lib.sln /p:Platform=x64 /p:Configuration="Debug Library"
+MSBuild.exe yatools.lib.sln /p:Platform=x86 /p:Configuration="Release Library"
+MSBuild.exe yatools.lib.sln /p:Platform=x64 /p:Configuration="Release Library"
