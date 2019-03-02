@@ -2,7 +2,9 @@
 
 #include <stdint.h>
 
+#ifndef YATOOLS_IMPORT
 #define YATOOLS_IMPORT
+#endif
 
 namespace yatools
 {
