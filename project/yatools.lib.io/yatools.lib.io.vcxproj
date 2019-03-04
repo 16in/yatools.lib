@@ -35,9 +35,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\io\MemoryStream.cpp" />
     <ClCompile Include="..\..\source\io\Stream.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\yatools\io\yatools.io.memorystream.h" />
     <ClInclude Include="..\..\include\yatools\io\yatools.io.stream.h" />
     <ClInclude Include="..\..\include\yatools\yatools.io.h" />
     <ClInclude Include="..\..\include\yatools\yatools.type.h" />

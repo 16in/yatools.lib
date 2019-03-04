@@ -18,6 +18,9 @@
     <ClCompile Include="..\..\source\io\Stream.cpp">
       <Filter>source\io</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\io\MemoryStream.cpp">
+      <Filter>source\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\yatools\io\yatools.io.stream.h">
@@ -28,6 +31,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\yatools\yatools.type.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\yatools\io\yatools.io.memorystream.h">
+      <Filter>include\io</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
