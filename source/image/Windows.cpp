@@ -118,7 +118,7 @@ ColorBuffer* Windows::GetColorBuffer( HBITMAP hBitmap )
 		uintptr bits = (uintptr)bitmap.bmBits;
 		for( uint32 y = 0; y < (uint32)bitmap.bmHeight; y++ )
 		{
-			buffer->SetPixels( 0, bitmap.bmHeight - y - 1, bits + (bitmap.bmWidthBytes * y), bitmap.bmWidthBytes );
+			buffer->SetPixels( 0, bitmap.bmHeight - y - 1, bits + (bitmap.bmWidthBytes * y), bitmap.bmWidth * (bitmap.bmBitsPixel / 8) );
 		}
 	}
 	return buffer;
